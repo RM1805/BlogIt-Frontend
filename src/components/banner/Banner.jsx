@@ -10,14 +10,35 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
-`
+
+@media (max-width: 768px) {
+    height: 40vh;
+  }
+
+  @media (max-width: 480px) {
+    height: 30vh;
+  }
+
+`;
+
 const Heading = styled(Typography)`
 font-size: 60px;
 color: #FFA500;
 line-height: 1
 background: #000;
 margin-top: 320px;
-`
+
+@media (max-width: 768px) {
+    font-size: 40px;
+    margin-top: 200px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 30px;
+    margin-top: 150px;
+  }
+
+`;
 
 const Banner = () => {
     return (
