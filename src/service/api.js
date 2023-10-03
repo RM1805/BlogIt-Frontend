@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
 import { getAccessToken, getRefreshToken, setAccessToken, getType } from '../utils/common-utils';
 
-const API_URL = 'https://blogit-backend-s19u.onrender.com';
+const API_URL = 'https://copper-swallow-fez.cyclic.cloud';
 
 const axiosInstance = axios.create({
     baseURL: API_URL,
