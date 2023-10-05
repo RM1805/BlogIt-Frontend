@@ -63,19 +63,24 @@ const CreatePost = () => {
     
     useEffect(() => {
         const getImage = async () => { 
-            if(file) {
+            if (file) {
                 const data = new FormData();
                 data.append("name", file.name);
                 data.append("file", file);
                 
                 const response = await API.uploadFile(data);
-                post.picture = response.data;
+                
+                // Update the post state using the functional update form
+                setPost(prevPost => ({
+                    ...prevPost,
+                    picture: response.data
+                }));
             }
         }
         getImage();
         post.categories = location.search?.split('=')[1] || 'All';
         post.username = account.username;
-    }, [file])
+    }, [file]);
 
     const savePost = async () => {
         await API.createPost(post);

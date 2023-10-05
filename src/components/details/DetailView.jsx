@@ -52,7 +52,7 @@ const Author = styled(Box)(({ theme }) => ({
 const DetailView = () => {
   const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
   
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null); // Initialize post state as null
   const { account } = useContext(DataContext);
 
   const navigate = useNavigate();
@@ -75,28 +75,30 @@ const DetailView = () => {
 
   return (
     <Container>
-      <Image src={post.picture || url} alt="post" />
-      <Box style={{ float: 'right' }}>
-        {post && account.username === post.username && (
+      <Image src={post?.picture || url} alt="post" /> {/* Use optional chaining to prevent errors if post is null */}
+      {post && account.username === post.username && (
+        <Box style={{ float: 'right' }}>
           <>  
             <Link to={`/update/${post._id}`}>
               <EditIcon color="primary" />
             </Link>
             <DeleteIcon onClick={() => deleteBlog()} color="error" />
           </>
-        )}
-      </Box>
-      <Heading>{post.title}</Heading>
-
-      <Author>
-        <Link to={`/?username=${post.username}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Typography>Author: <span style={{fontWeight: 600}}>{post.username}</span></Typography>
-        </Link>
-        <Typography style={{marginLeft: 'auto'}}>{new Date(post.createdDate).toDateString()}</Typography>
-      </Author>
-
-      <Typography>{post.description}</Typography>
-      <Comments post={post} />
+        </Box>
+      )}
+      {post && (
+        <>
+          <Heading>{post.title}</Heading>
+          <Author>
+            <Link to={`/?username=${post.username}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Typography>Author: <span style={{fontWeight: 600}}>{post.username}</span></Typography>
+            </Link>
+            <Typography style={{marginLeft: 'auto'}}>{new Date(post.createdDate).toDateString()}</Typography>
+          </Author>
+          <Typography>{post.description}</Typography>
+          <Comments post={post} />
+        </>
+      )}
     </Container>
   );
 };

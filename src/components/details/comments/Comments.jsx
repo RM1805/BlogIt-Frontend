@@ -5,7 +5,7 @@ import { DataContext } from '../../../context/DataProvider';
 
 import { API } from '../../../service/api';
 
-//components
+// components
 import Comment from './Comment';
 
 const Container = styled(Box)`
@@ -60,9 +60,9 @@ const Comments = ({ post }) => {
         });
     }
 
-    const addComment = async() => {
+    const addComment = async () => {
         await API.newComment(comment);
-        setComment(initialValue)
+        setComment(initialValue);
         setToggle(prev => !prev);
     }
     
@@ -82,14 +82,14 @@ const Comments = ({ post }) => {
                     size="medium" 
                     style={{ height: 40 }}
                     onClick={(e) => addComment(e)}
-                >Post</Button>             
+                >
+                    Post
+                </Button>             
             </Container>
             <Box>
-                {
-                    comments && comments.length > 0 && comments.map(comment => (
-                        <Comment comment={comment} setToggle={setToggle} />
-                    ))
-                }
+                {comments && comments.length > 0 && comments.map(comment => (
+                    <Comment key={comment._id} comment={comment} setToggle={setToggle} />
+                ))}
             </Box>
         </Box>
     )

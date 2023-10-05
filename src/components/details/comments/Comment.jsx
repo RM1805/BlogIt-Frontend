@@ -18,7 +18,7 @@ const Container = styled(Box)`
 `;
 
 const Name = styled(Typography)`
-    font-weight: 600,
+    font-weight: 600; /* Fixed the CSS syntax error here */
     font-size: 18px;
     margin-right: 20px;
 `;

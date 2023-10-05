@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
-import { getAccessToken, setAccessToken, getType } from '../utils/common-utils';
+import { getAccessToken } from '../utils/utility';
 
-const API_URL = 'https://copper-swallow-fez.cyclic.cloud';
+const API_URL = 'https://copper-swallow-fez.cyclic.cloud'; 
 
 const axiosInstance = axios.create({
     baseURL: API_URL,

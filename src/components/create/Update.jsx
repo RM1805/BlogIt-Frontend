@@ -54,7 +54,7 @@ const Update = () => {
     const navigate = useNavigate();
 
     const [post, setPost] = useState(initialPost);
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState(null); // Changed to null
     const [imageURL, setImageURL] = useState('');
 
     const { id } = useParams();
@@ -63,34 +63,57 @@ const Update = () => {
     
     useEffect(() => {
         const fetchData = async () => {
-            let response = await API.getPostById(id);
-            if (response.isSuccess) {
-                setPost(response.data);
+            try {
+                const response = await API.getPostById(id);
+                if (response.status === 200) { // Check for the HTTP status code
+                    setPost(response.data);
+                } else {
+                    // Handle the case where the request was not successful
+                    console.error('Failed to fetch post data');
+                }
+            } catch (error) {
+                console.error('Error fetching post data:', error);
             }
         }
         fetchData();
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         const getImage = async () => { 
-            if(file) {
+            if (file) {
                 const data = new FormData();
                 data.append("name", file.name);
                 data.append("file", file);
                 
-                const response = await API.uploadFile(data);
-                if (response.isSuccess) {
-                    post.picture = response.data;
-                    setImageURL(response.data);    
+                try {
+                    const response = await API.uploadFile(data);
+                    if (response.status === 200) {
+                        post.picture = response.data;
+                        setImageURL(response.data);    
+                    } else {
+                        // Handle the case where the file upload was not successful
+                        console.error('Failed to upload file');
+                    }
+                } catch (error) {
+                    console.error('Error uploading file:', error);
                 }
             }
         }
         getImage();
-    }, [file])
+    }, [file, post]);
 
     const updateBlogPost = async () => {
-        await API.updatePost(post);
-        navigate(`/details/${id}`);
+        try {
+            const response = await API.updatePost(post);
+            if (response.status === 200) {
+                navigate(`/details/${id}`);
+            } else {
+                // Handle the case where the update request was not successful
+                console.error('Failed to update blog post');
+            }
+        } catch (error) {
+            console.error('Error updating blog post:', error);
+        }
     }
 
     const handleChange = (e) => {

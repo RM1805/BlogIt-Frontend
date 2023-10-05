@@ -1,3 +1,5 @@
+// utility.js
+
 export const getAccessToken = () => {
     return sessionStorage.getItem('accessToken');
 }
@@ -7,21 +9,21 @@ export const getRefreshToken = () => {
 }
 
 export const setAccessToken = (accessToken) => {
-    sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
+    sessionStorage.setItem('accessToken', accessToken);
 }
 
 export const setRefreshToken = (refreshToken) => {
-    sessionStorage.setItem('refreshToken', `Bearer ${refreshToken}`);
+    sessionStorage.setItem('refreshToken', refreshToken);
 }
 
 export const getType = (value, body) => {
     if (value.params) {
-        return { params: body }
+        return { params: body };
     } else if (value.query) {
-        if (typeof body === 'object') {
-            return { query: body._id }
+        if (body && typeof body === 'object' && body._id) {
+            return { query: body._id };
         } else {
-            return { query: body }
+            return { query: body };
         }
     }
     return {};
